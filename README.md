@@ -6,16 +6,16 @@ This Terraform module deploys a Sonatype Nexus OOS on AWS. Based on official Son
 
 ## Usage
  
-    module "nexus" {
-        source              = "jnonino/nexus/aws"
-        name_preffix        = "${var.name_preffix}"
-        profile             = "${var.profile}"
-        region              = "${var.region}"
-        vpc_id              = "${module.networking.vpc_id}"
-        availability_zones  = [ "${var.availability_zones}" ]
-        public_subnets_ids  = [ "${module.networking.public_subnets_ids}" ]
-        private_subnets_ids = [ "${module.networking.private_subnets_ids}" ]
-    }
+        module "nexus" {
+            source              = "jnonino/nexus/aws"
+            name_preffix        = "${var.name_preffix}"
+            profile             = "${var.profile}"
+            region              = "${var.region}"
+            vpc_id              = "${module.networking.vpc_id}"
+            availability_zones  = [ "${var.availability_zones}" ]
+            public_subnets_ids  = [ "${module.networking.public_subnets_ids}" ]
+            private_subnets_ids = [ "${module.networking.private_subnets_ids}" ]
+        }
 
 ## Output values
 
