@@ -2,6 +2,8 @@
 
 This Terraform module deploys a Sonatype Nexus OOS on AWS. Based on official Sonatype Nexus Docker image <https://hub.docker.com/r/sonatype/nexus/>.
 
+[![CircleCI](https://circleci.com/gh/jnonino/terraform-aws-nexus/tree/master.svg?style=svg)](https://circleci.com/gh/jnonino/terraform-aws-nexus/tree/master)
+
 ## Usage
  
     module "nexus" {
