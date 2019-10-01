@@ -12,7 +12,7 @@ This Terraform module deploys a Sonatype Nexus OOS on AWS. Based on official Son
 ## Usage
  
         module "nexus" {
-            source              = "jnonino/nexus/aws"
+            source              = "cn-terraform/nexus/aws"
             name_preffix        = var.name_preffix
             profile             = var.profile
             region              = var.region
@@ -25,7 +25,7 @@ This Terraform module deploys a Sonatype Nexus OOS on AWS. Based on official Son
 The networking module should look like this:
 
         module "networking" {
-    	    source          = "jnonino/networking/aws"
+            source          = "jnonino/networking/aws"
             version         = "2.0.3"
             name_preffix    = "base"
             profile         = "aws_profile"
