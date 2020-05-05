@@ -11,16 +11,9 @@ This Terraform module deploys a Sonatype Nexus OOS on AWS. Based on official Son
 
 ## Usage
 
-        module "nexus" {
-            source              = "cn-terraform/nexus/aws"
-            name_preffix        = var.name_preffix
-            profile             = var.profile
-            region              = var.region
-            vpc_id              = module.networking.vpc_id
-            availability_zones  = module.networking.availability_zones
-            public_subnets_ids  = module.networking.public_subnets_ids
-            private_subnets_ids = module.networking.private_subnets_ids
-        }
+Check valid versions on:
+* Github Releases: <https://github.com/cn-terraform/terraform-aws-nexus/releases>
+* Terraform Module Registry: <https://registry.terraform.io/modules/cn-terraform/nexus/aws>
 
 ## Other modules that you may need to use this module
 
