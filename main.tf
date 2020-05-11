@@ -31,7 +31,7 @@ module "ecs_fargate" {
   public_subnets_ids           = var.public_subnets_ids
   private_subnets_ids          = var.private_subnets_ids
   container_name               = "${var.name_preffix}-nexus"
-  container_image              = "cnservices/nexus"
+  container_image              = "sonatype/nexus3"
   container_cpu                = 4096
   container_memory             = 8192
   container_memory_reservation = 4096
@@ -43,6 +43,12 @@ module "ecs_fargate" {
       hostPort      = 8081
       protocol      = "tcp"
     }
+  ]
+  environment = [
+    {
+      name  = "NEXUS_SECURITY_RANDOMPASSWORD"
+      value = "false"
+    },
   ]
   log_configuration = {
     logDriver = "awslogs"
