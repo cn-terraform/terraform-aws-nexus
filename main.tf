@@ -35,7 +35,7 @@ module "ecs_fargate" {
   container_cpu                = 4096
   container_memory             = 8192
   container_memory_reservation = 4096
-  lb_http_ports                = [ 8081 ]
+  lb_http_ports                = [8081]
   lb_https_ports               = []
   port_mappings = [
     {
