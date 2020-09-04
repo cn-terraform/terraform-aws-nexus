@@ -12,10 +12,10 @@
 #------------------------------------------------------------------------------
 module aws_cw_logs {
   source  = "cn-terraform/cloudwatch-logs/aws"
-  version = "1.0.6"
+  version = "1.0.7"
   # source  = "../terraform-aws-cloudwatch-logs"
 
-  logs_path = "/ecs/service/${var.name_preffix}-nexus"
+  logs_path = "/ecs/service/${var.name_prefix}-nexus"
 }
 
 #------------------------------------------------------------------------------
@@ -23,14 +23,14 @@ module aws_cw_logs {
 #------------------------------------------------------------------------------
 module "ecs_fargate" {
   source  = "cn-terraform/ecs-fargate/aws"
-  version = "2.0.17"
+  version = "2.0.18"
   # source = "../terraform-aws-ecs-fargate"
 
-  name_preffix                 = "${var.name_preffix}-nexus"
+  name_prefix                  = "${var.name_prefix}-nexus"
   vpc_id                       = var.vpc_id
   public_subnets_ids           = var.public_subnets_ids
   private_subnets_ids          = var.private_subnets_ids
-  container_name               = "${var.name_preffix}-nexus"
+  container_name               = "${var.name_prefix}-nexus"
   container_image              = "sonatype/nexus3"
   container_cpu                = 4096
   container_memory             = 8192
@@ -54,7 +54,7 @@ module "ecs_fargate" {
     logDriver = "awslogs"
     options = {
       "awslogs-region"        = var.region
-      "awslogs-group"         = "/ecs/service/${var.name_preffix}-nexus"
+      "awslogs-group"         = "/ecs/service/${var.name_prefix}-nexus"
       "awslogs-stream-prefix" = "ecs"
     }
     secretOptions = null
