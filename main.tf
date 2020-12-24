@@ -10,7 +10,7 @@
 #------------------------------------------------------------------------------
 # AWS Cloudwatch Logs
 #------------------------------------------------------------------------------
-module aws_cw_logs {
+module "aws_cw_logs" {
   source  = "cn-terraform/cloudwatch-logs/aws"
   version = "1.0.7"
   # source  = "../terraform-aws-cloudwatch-logs"

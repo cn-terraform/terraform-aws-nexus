@@ -20,16 +20,16 @@ variable "vpc_id" {
 }
 
 variable "availability_zones" {
-  type        = list
+  type        = list(any)
   description = "List of Availability Zones"
 }
 
 variable "public_subnets_ids" {
-  type        = list
+  type        = list(any)
   description = "List of Public Subnets IDs"
 }
 
 variable "private_subnets_ids" {
-  type        = list
+  type        = list(any)
   description = "List of Private Subnets IDs"
 }
