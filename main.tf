@@ -19,11 +19,56 @@ module "aws_cw_logs" {
 }
 
 #------------------------------------------------------------------------------
+# EFS
+#------------------------------------------------------------------------------
+# resource "aws_efs_file_system" "nexus_data" {
+#   creation_token = "${var.name_prefix}-nexus-efs"
+#   tags = {
+#     Name = "${var.name_prefix}-nexus-efs"
+#   }
+# }
+# resource "aws_security_group" "nexus_data_allow_nfs_access" {
+#   name        = "${var.name_prefix}-nexus-efs-allow-nfs"
+#   description = "Allow NFS inbound traffic to EFS"
+#   vpc_id      = var.vpc_id
+#   egress {
+#     from_port   = 0
+#     to_port     = 0
+#     protocol    = "-1"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
+#   tags = {
+#     Name = "${var.name_prefix}-nexus-efs-allow-nfs"
+#   }
+# }
+
+# data "aws_subnet" "private_subnets" {
+#   count = length(var.private_subnets_ids)
+#   id    = element(var.private_subnets_ids, count.index)
+# }
+
+# resource "aws_security_group_rule" "nexus_data_allow_nfs_access_rule" {
+#   security_group_id        = aws_security_group.nexus_data_allow_nfs_access.id
+#   type                     = "ingress"
+#   from_port                = 2049
+#   to_port                  = 2049
+#   protocol                 = "tcp"
+#   source_security_group_id = module.ecs-fargate-service.ecs_tasks_sg_id
+# }
+
+# resource "aws_efs_mount_target" "nexus_data_mount_targets" {
+#   count           = length(var.private_subnets_ids)
+#   file_system_id  = aws_efs_file_system.nexus_data.id
+#   subnet_id       = element(var.private_subnets_ids, count.index)
+#   security_groups = [aws_security_group.nexus_data_allow_nfs_access.id]
+# }
+
+#------------------------------------------------------------------------------
 # ECS Fargate Service
 #------------------------------------------------------------------------------
 module "ecs_fargate" {
   source  = "cn-terraform/ecs-fargate/aws"
-  version = "2.0.22"
+  version = "2.0.24"
   # source = "../terraform-aws-ecs-fargate"
 
   name_prefix                  = "${var.name_prefix}-nexus"
@@ -31,7 +76,7 @@ module "ecs_fargate" {
   public_subnets_ids           = var.public_subnets_ids
   private_subnets_ids          = var.private_subnets_ids
   container_name               = "${var.name_prefix}-nexus"
-  container_image              = "sonatype/nexus3"
+  container_image              = var.nexus_image
   container_cpu                = 4096
   container_memory             = 8192
   container_memory_reservation = 4096

@@ -33,3 +33,12 @@ variable "private_subnets_ids" {
   type        = list(any)
   description = "List of Private Subnets IDs"
 }
+
+#------------------------------------------------------------------------------
+# Nexus image version
+#------------------------------------------------------------------------------
+variable "nexus_image" {
+  description = "Nexus image"
+  type        = string
+  default     = "sonatype/nexus3"
+}
