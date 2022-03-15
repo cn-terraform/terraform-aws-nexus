@@ -109,4 +109,11 @@ module "ecs_fargate" {
     }
     secretOptions = null
   }
+  ulimits = [
+    {
+      name      = "nofile"
+      hardLimit = 65536
+      softLimit = 65536
+    }
+  ]
 }
