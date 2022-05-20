@@ -68,7 +68,7 @@ module "aws_cw_logs" {
 #------------------------------------------------------------------------------
 module "ecs_fargate" {
   source  = "cn-terraform/ecs-fargate/aws"
-  version = "2.0.38"
+  version = "2.0.39"
   # source = "../terraform-aws-ecs-fargate"
 
   name_prefix                  = "${var.name_prefix}-nexus"
@@ -87,6 +87,14 @@ module "ecs_fargate" {
     }
   }
   lb_https_ports = {}
+
+  # Application Load Balancer Logs
+  enable_s3_logs                                 = var.enable_s3_logs
+  block_s3_bucket_public_access                  = var.block_s3_bucket_public_access
+  enable_s3_bucket_server_side_encryption        = var.enable_s3_bucket_server_side_encryption
+  s3_bucket_server_side_encryption_sse_algorithm = var.s3_bucket_server_side_encryption_sse_algorithm
+  s3_bucket_server_side_encryption_key           = var.s3_bucket_server_side_encryption_key
+
   port_mappings = [
     {
       containerPort = 8081
