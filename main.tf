@@ -87,6 +87,14 @@ module "ecs_fargate" {
     }
   }
   lb_https_ports = {}
+
+  # Application Load Balancer Logs
+  enable_s3_logs                                 = var.enable_s3_logs
+  block_s3_bucket_public_access                  = var.block_s3_bucket_public_access
+  enable_s3_bucket_server_side_encryption        = var.enable_s3_bucket_server_side_encryption
+  s3_bucket_server_side_encryption_sse_algorithm = var.s3_bucket_server_side_encryption_sse_algorithm
+  s3_bucket_server_side_encryption_key           = var.s3_bucket_server_side_encryption_key
+
   port_mappings = [
     {
       containerPort = 8081
