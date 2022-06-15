@@ -12,7 +12,6 @@ module "nexus" {
   name_prefix         = "nexus"
   region              = "us-east-1"
   vpc_id              = module.base-network.vpc_id
-  availability_zones  = module.base-network.availability_zones
   public_subnets_ids  = module.base-network.public_subnets_ids
   private_subnets_ids = module.base-network.private_subnets_ids
 }
