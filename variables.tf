@@ -5,6 +5,12 @@ variable "name_prefix" {
   description = "Name prefix for resources on AWS"
 }
 
+variable "tags" {
+  type        = map(string)
+  default     = {}
+  description = "Resource tags"
+}
+
 #------------------------------------------------------------------------------
 # AWS REGION
 #------------------------------------------------------------------------------
@@ -27,6 +33,30 @@ variable "public_subnets_ids" {
 variable "private_subnets_ids" {
   type        = list(any)
   description = "List of Private Subnets IDs"
+}
+
+variable "lb_enable_cross_zone_load_balancing" {
+  type        = string
+  default     = "true"
+  description = "Enable cross zone support for LB"
+}
+
+variable "lb_http_ports" {
+  description = "Map containing objects to define listeners behaviour based on type field. If type field is `forward`, include listener_port and the target_group_port. For `redirect` type, include listener port, host, path, port, protocol, query and status_code. For `fixed-response`, include listener_port, content_type, message_body and status_code"
+  type        = map(any)
+  default     = {}
+}
+
+variable "lb_https_ports" {
+  description = "Map containing objects to define listeners behaviour based on type field. If type field is `forward`, include listener_port and the target_group_port. For `redirect` type, include listener port, host, path, port, protocol, query and status_code. For `fixed-response`, include listener_port, content_type, message_body and status_code"
+  type        = map(any)
+  default = {
+    default = {
+      listener_port         = 443
+      target_group_port     = 8081
+      target_group_protocol = "HTTP"
+    }
+  }
 }
 
 #------------------------------------------------------------------------------
@@ -90,4 +120,85 @@ variable "nexus_image" {
   description = "Nexus image"
   type        = string
   default     = "sonatype/nexus3"
+}
+
+variable "container_cpu" {
+  description = "(Optional) The number of cpu units to reserve for the container. This is optional for tasks using Fargate launch type and the total amount of container_cpu of all containers in a task will need to be lower than the task-level cpu value"
+  type        = number
+  default     = 4096
+}
+
+variable "container_memory" {
+  description = "(Optional) The amount of memory (in MiB) to allow the container to use. This is a hard limit, if the container attempts to exceed the container_memory, the container is killed. This field is optional for Fargate launch type and the total amount of container_memory of all containers in a task will need to be lower than the task memory value"
+  type        = number
+  default     = 8192
+}
+
+variable "container_memory_reservation" {
+  description = "(Optional) The amount of memory (in MiB) to reserve for the container. If container needs to exceed this threshold, it can do so up to the set container_memory hard limit"
+  type        = number
+  default     = 4096
+}
+
+#------------------------------------------------------------------------------
+# Nexus storage settings
+#------------------------------------------------------------------------------
+
+variable "ephemeral_storage_size" {
+  type        = number
+  description = "The number of GBs to provision for ephemeral storage on Fargate tasks. Must be greater than or equal to 21 and less than or equal to 200"
+  default     = 0
+}
+
+variable "volumes" {
+  description = "(Optional) A set of volume blocks that containers in your task may use"
+  type = list(object({
+    host_path = string
+    name      = string
+    docker_volume_configuration = list(object({
+      autoprovision = bool
+      driver        = string
+      driver_opts   = map(string)
+      labels        = map(string)
+      scope         = string
+    }))
+    efs_volume_configuration = list(object({
+      file_system_id          = string
+      root_directory          = string
+      transit_encryption      = string
+      transit_encryption_port = string
+      authorization_config = list(object({
+        access_point_id = string
+        iam             = string
+      }))
+    }))
+  }))
+  default = []
+}
+
+variable "mount_points" {
+  type = list(any)
+
+  description = "Container mount points. This is a list of maps, where each map should contain a `containerPath` and `sourceVolume`. The `readOnly` key is optional."
+  default     = []
+}
+
+#------------------------------------------------------------------------------
+# Nexus SSL settings
+#------------------------------------------------------------------------------
+
+variable "configure_loadbalancer_ssl" {
+  type = object({
+    enable_ssl               = bool
+    dns_zone_id              = string
+    https_record_name        = string
+    https_record_domain_name = string
+  })
+  description = "Enable SSL, and configure the loadbalancer to use the certificate"
+  default = {
+    enable_ssl               = false
+    dns_zone_id              = ""
+    https_record_name        = ""
+    https_record_domain_name = ""
+  }
 }
