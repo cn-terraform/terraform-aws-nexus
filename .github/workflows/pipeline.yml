@@ -13,11 +13,6 @@ env:
   AWS_ACCESS_KEY_ID: localstack
   AWS_SECRET_ACCESS_KEY: localstack
 
-env:
-  DEFAULT_REGION: us-east-1
-  AWS_ACCESS_KEY_ID: localstack
-  AWS_SECRET_ACCESS_KEY: localstack
-
 jobs:
   check-format:
     runs-on: ubuntu-latest
