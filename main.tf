@@ -71,7 +71,7 @@ module "aws_cw_logs" {
 #------------------------------------------------------------------------------
 module "ecs_fargate" {
   source  = "cn-terraform/ecs-fargate/aws"
-  version = "2.0.43"
+  version = "2.0.45"
   # source = "../terraform-aws-ecs-fargate"
 
   name_prefix                  = "${var.name_prefix}-nexus"
@@ -93,6 +93,7 @@ module "ecs_fargate" {
   lb_http_ports                       = var.lb_http_ports
   lb_https_ports                      = var.lb_https_ports
   lb_enable_cross_zone_load_balancing = var.lb_enable_cross_zone_load_balancing
+  lb_waf_web_acl_arn                  = var.lb_waf_web_acl_arn
   default_certificate_arn             = var.configure_loadbalancer_ssl.enable_ssl ? module.acm[0].acm_certificate_arn : null
 
   # Application Load Balancer Logs
