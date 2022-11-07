@@ -90,6 +90,7 @@ module "ecs_fargate" {
   mount_points           = var.mount_points
 
   # Application Load Balancer
+  custom_lb_arn                       = var.custom_lb_arn
   lb_http_ports                       = var.lb_http_ports
   lb_https_ports                      = var.lb_https_ports
   lb_enable_cross_zone_load_balancing = var.lb_enable_cross_zone_load_balancing
