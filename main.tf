@@ -71,7 +71,7 @@ module "aws_cw_logs" {
 #------------------------------------------------------------------------------
 module "ecs_fargate" {
   source  = "cn-terraform/ecs-fargate/aws"
-  version = "2.0.48"
+  version = "2.0.49"
   # source = "../terraform-aws-ecs-fargate"
 
   name_prefix                  = "${var.name_prefix}-nexus"
@@ -83,6 +83,10 @@ module "ecs_fargate" {
   container_cpu                = var.container_cpu
   container_memory             = var.container_memory
   container_memory_reservation = var.container_memory_reservation
+
+  # Deployment circuit breaker
+  deployment_circuit_breaker_enabled  = var.deployment_circuit_breaker_enabled
+  deployment_circuit_breaker_rollback = var.deployment_circuit_breaker_rollback
 
   # Container ephemeral storage on Fargate tasks
   ephemeral_storage_size = var.ephemeral_storage_size
