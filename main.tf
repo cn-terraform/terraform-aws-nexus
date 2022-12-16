@@ -84,6 +84,10 @@ module "ecs_fargate" {
   container_memory             = var.container_memory
   container_memory_reservation = var.container_memory_reservation
 
+  # Deployment circuit breaker
+  deployment_circuit_breaker_enabled  = var.deployment_circuit_breaker_enabled
+  deployment_circuit_breaker_rollback = var.deployment_circuit_breaker_rollback
+
   # Container ephemeral storage on Fargate tasks
   ephemeral_storage_size = var.ephemeral_storage_size
   volumes                = var.volumes
