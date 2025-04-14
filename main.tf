@@ -172,6 +172,8 @@ module "acm" {
     "*.${var.configure_loadbalancer_ssl.https_record_domain_name}",
   ]
 
+  validation_method = var.configure_loadbalancer_ssl.validation_method
+
   wait_for_validation = true
 
   tags = var.tags
