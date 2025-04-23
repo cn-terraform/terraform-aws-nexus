@@ -6,8 +6,8 @@ variable "name_prefix" {
 }
 
 variable "tags" {
-  type        = map(string)
-  default     = {}
+  type = map(string)
+  default = {}
   description = "Resource tags"
 }
 
@@ -26,12 +26,12 @@ variable "vpc_id" {
 }
 
 variable "public_subnets_ids" {
-  type        = list(any)
+  type = list(any)
   description = "List of Public Subnets IDs"
 }
 
 variable "private_subnets_ids" {
-  type        = list(any)
+  type = list(any)
   description = "List of Private Subnets IDs"
 }
 
@@ -43,13 +43,13 @@ variable "lb_enable_cross_zone_load_balancing" {
 
 variable "lb_http_ports" {
   description = "Map containing objects to define listeners behaviour based on type field. If type field is `forward`, include listener_port and the target_group_port. For `redirect` type, include listener port, host, path, port, protocol, query and status_code. For `fixed-response`, include listener_port, content_type, message_body and status_code"
-  type        = map(any)
-  default     = {}
+  type = map(any)
+  default = {}
 }
 
 variable "lb_https_ports" {
   description = "Map containing objects to define listeners behaviour based on type field. If type field is `forward`, include listener_port and the target_group_port. For `redirect` type, include listener port, host, path, port, protocol, query and status_code. For `fixed-response`, include listener_port, content_type, message_body and status_code"
-  type        = map(any)
+  type = map(any)
   default = {
     default = {
       listener_port         = 443
@@ -182,8 +182,8 @@ variable "volumes" {
     docker_volume_configuration = list(object({
       autoprovision = bool
       driver        = string
-      driver_opts   = map(string)
-      labels        = map(string)
+      driver_opts = map(string)
+      labels = map(string)
       scope         = string
     }))
     efs_volume_configuration = list(object({
@@ -204,7 +204,7 @@ variable "mount_points" {
   type = list(any)
 
   description = "Container mount points. This is a list of maps, where each map should contain a `containerPath` and `sourceVolume`. The `readOnly` key is optional."
-  default     = []
+  default = []
 }
 
 #------------------------------------------------------------------------------
@@ -217,6 +217,7 @@ variable "configure_loadbalancer_ssl" {
     dns_zone_id              = string
     https_record_name        = string
     https_record_domain_name = string
+    validation_method        = string
   })
   description = "Enable SSL, and configure the loadbalancer to use the certificate"
   default = {
@@ -224,5 +225,6 @@ variable "configure_loadbalancer_ssl" {
     dns_zone_id              = ""
     https_record_name        = ""
     https_record_domain_name = ""
+    validation_method        = null
   }
 }
