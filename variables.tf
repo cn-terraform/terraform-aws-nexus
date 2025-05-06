@@ -217,6 +217,7 @@ variable "configure_loadbalancer_ssl" {
     dns_zone_id              = string
     https_record_name        = string
     https_record_domain_name = string
+    validation_method        = string
   })
   description = "Enable SSL, and configure the loadbalancer to use the certificate"
   default = {
@@ -224,5 +225,6 @@ variable "configure_loadbalancer_ssl" {
     dns_zone_id              = ""
     https_record_name        = ""
     https_record_domain_name = ""
+    validation_method        = null
   }
 }
