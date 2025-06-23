@@ -163,7 +163,7 @@ module "acm" {
   count = var.configure_loadbalancer_ssl.enable_ssl ? 1 : 0
 
   source  = "terraform-aws-modules/acm/aws"
-  version = "5.2.0"
+  version = "6.0.0"
 
   domain_name = var.configure_loadbalancer_ssl.https_record_domain_name
   zone_id     = var.configure_loadbalancer_ssl.dns_zone_id
